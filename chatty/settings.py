@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'chat',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -48,6 +50,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'chatty.urls'
 
@@ -68,6 +72,22 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'chatty.wsgi.application'
+
+# mysite/settings.py
+# Channels
+ASGI_APPLICATION = 'chatty.routing.application'
+
+# login_required
+LOGIN_REDIRECT_URL = '/'
+# Channels
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 
 # Database
