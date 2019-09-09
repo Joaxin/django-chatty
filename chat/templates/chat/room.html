@@ -1,47 +1,200 @@
-<!-- chat/templates/chat/room.html -->
+{% load static %}
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Room</title>
-</head>
-<body>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br/>
-    <input id="chat-message-input" type="text" size="100"/><br/>
-    <input id="chat-message-submit" type="button" value="Send"/>
-</body>
+  <head>
+    <!-- <script src="https://use.typekit.net/hoy3lrg.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script> -->
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+    <link crossorigin="anonymous" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" href="https://lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" href="https://lib.baomitu.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script crossorigin="anonymous" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" src="https://lib.baomitu.com/jquery/3.4.1/jquery.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://lib.baomitu.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <style>
+            
+        /* source-sans-pro-regular */
+        @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: regular;
+        src: url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-regular.eot'); /* IE9 Compat Modes */
+        src: local('Source Sans Pro'), local('SourceSans Pro-Normal'),
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-regular.woff2') format('woff2'), /* Super Modern Browsers */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-regular.woff') format('woff'), /* Modern Browsers */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-regular.svg#SourceSans Pro') format('svg'); /* Legacy iOS */
+        }
+        
+        /* source-sans-pro-600 */
+        @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 600;
+        src: url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-600.eot'); /* IE9 Compat Modes */
+        src: local('Source Sans Pro'), local('SourceSans Pro-Normal'),
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-600.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-600.woff2') format('woff2'), /* Super Modern Browsers */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-600.woff') format('woff'), /* Modern Browsers */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-600.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-600.svg#SourceSans Pro') format('svg'); /* Legacy iOS */
+        }
+        
+        /* source-sans-pro-700 */
+        @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 700;
+        src: url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-700.eot'); /* IE9 Compat Modes */
+        src: local('Source Sans Pro'), local('SourceSans Pro-Normal'),
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-700.woff2') format('woff2'), /* Super Modern Browsers */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-700.woff') format('woff'), /* Modern Browsers */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-700.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-700.svg#SourceSans Pro') format('svg'); /* Legacy iOS */
+        }
+        
+        /* source-sans-pro-300 */
+        @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 300;
+        src: url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-300.eot'); /* IE9 Compat Modes */
+        src: local('Source Sans Pro'), local('SourceSans Pro-Normal'),
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-300.woff2') format('woff2'), /* Super Modern Browsers */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-300.woff') format('woff'), /* Modern Browsers */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-300.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('//lib.baomitu.com/fonts/source-sans-pro/source-sans-pro-300.svg#SourceSans Pro') format('svg'); /* Legacy iOS */
+}
+  </style>
+  </head>
+
+<body >
+  <div id="frame">
+    <div class="content">
+      <div class="contact-profile">
+        <img src="{% static 'avatars/pig.jpg' %}" alt="" />
+        <p>{{ user.username }}</p>
+        <div class="social-media">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+          <i class="fa fa-instagram" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="messages" id="messages_id">
+        <ul id="chat-log">
+          {% comment %} 
+          {% endcomment %}
+        </ul>
+      </div>
+      <div class="message-input">
+        <div class="wrap">
+        <input id="chat-message-input" type="text" placeholder="Write your message..."  autofocus/>
+        <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+        <button id="chat-message-submit" class="submit" >
+          <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="{% static 'main.js' %}"></script>
+<script src="{% static 'reconnecting-websocket.js' %}"></script>
 <script>
     var roomName = {{ room_name_json }};
+    var username = "{{ user.username | safe}}";
+    
 
-    var chatSocket = new WebSocket(
+    var chatSocket = new ReconnectingWebSocket(
         'ws://' + window.location.host +
         '/ws/chat/' + roomName + '/');
 
+
+    chatSocket.onopen = function(e) {
+      fetchMessages();
+    }
+    
+
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
-        var message = data['message'];
-        document.querySelector('#chat-log').value += (message + '\n');
+        if (data['command'] === 'messages') {
+          for (let i=0; i<data['messages'].length; i++) {
+            createMessage(data['messages'][i]);
+          }
+        } else if (data['command'] === 'new_message'){
+          createMessage(data['message']);
+          scrollToBottom();
+    
+        }
+        
     };
 
     chatSocket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
     };
 
-    document.querySelector('#chat-message-input').focus();
+
     document.querySelector('#chat-message-input').onkeyup = function(e) {
         if (e.keyCode === 13) {  // enter, return
             document.querySelector('#chat-message-submit').click();
+            
         }
     };
 
     document.querySelector('#chat-message-submit').onclick = function(e) {
-        var messageInputDom = document.querySelector('#chat-message-input');
+        var messageInputDom = document.getElementById('chat-message-input');
         var message = messageInputDom.value;
+        scrollToBottom();
         chatSocket.send(JSON.stringify({
-            'message': message
+            'command': 'new_message',
+            'message': message,
+            'from': username
         }));
 
         messageInputDom.value = '';
     };
+
+    function scrollToBottom() {
+      var objDiv = document.getElementById("messages_id");
+      objDiv.scrollTop = objDiv.scrollHeight;
+
+    }
+
+    function fetchMessages() {
+      chatSocket.send(JSON.stringify({'command': 'fetch_messages' }));
+
+    }
+
+    function createMessage(data) {
+      var author = data['author'];
+      var msgListTag = document.createElement('li');
+      var imgTag = document.createElement('img');
+      var pTag = document.createElement('p');
+      var tTag = document.createElement('time');
+      tTag.className = "time";
+      tTag.textContent = data.timestamp.substring(10,16);
+      pTag.textContent = data.content;
+      
+      imgTag.src = "{% static 'avatars/dontdothis.jpg' %}";
+      
+      if (author === username) {
+        msgListTag.className = 'sent';
+      } else {
+        msgListTag.className = 'replies';
+      }
+      msgListTag.appendChild(tTag);
+      msgListTag.appendChild(imgTag);
+      msgListTag.appendChild(pTag);
+      
+      document.querySelector('#chat-log').appendChild(msgListTag);
+    }
+   
+
+
+
 </script>
+</body>
+
 </html>

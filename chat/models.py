@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="author_messages")
@@ -11,3 +12,6 @@ class Message(models.Model):
 
     def get_20_messages(self):
         return Message.objects.order_by('-timestamp').all()[:20]
+        
+    def last_10_messages():
+        return reversed(Message.objects.order_by('-timestamp').all()[:10])
