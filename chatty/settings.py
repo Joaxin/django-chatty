@@ -25,7 +25,7 @@ SECRET_KEY = 'y#e&b0l6x_w=1$pr9@l8k1n@papj$&7i#zxqv$eva66n+vejao'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'chatty.wsgi.application'
 ASGI_APPLICATION = 'chatty.routing.application'
 
 # login_required
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/chat/'
 # Channels
 CHANNEL_LAYERS = {
     'default': {
@@ -125,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 

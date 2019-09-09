@@ -9,6 +9,10 @@ from django.core import serializers
 def index(request):
     return render(request, "chat/index.html")
 
+def login(request):
+    return render(request, "chat/login.html")
+
+@login_required
 def room(request, room_name):
     if request.user:
         print(request.user.username)
