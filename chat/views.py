@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 import json
 from django.core import serializers
 
-
+@login_required
 def index(request):
     return render(request, "chat/index.html")
 
