@@ -129,3 +129,36 @@ class ChatConsumer(WebsocketConsumer):
     def chat_message(self, event):
         message = event['message']
         self.send(text_data=json.dumps(message))
+        
+        
+    async def handle_json(self, message):
+         self.session = {
+             # Set up file object and attributes
+         }
+
+    async def handle_chunk(self, message, **kwargs):
+        upload_size = self.session.get('upload_size')
+        temp_destination = self.session.get('upload_file')
+
+        if not upload_size or not temp_destination:
+            return self.error('Invalid request. Please try again.')
+
+        self.session['upload_file'].write(message)
+        size = self.session['upload_file'].tell()
+
+        percent = round((size / upload_size) * 100)
+        await self.send_json({
+            'action': 'progress',
+            'percent': percent,
+            'file_size': size
+        })
+
+        if size >= upload_size:
+            self.session['upload_file'].flush()
+            file_name = await self.handle_complete(self.session['upload_file'])
+
+            await self.send_json({
+                'action': 'complete',
+                'file_size': size,
+                'file_name': file_name
+            }, close=True)

@@ -1,5 +1,3 @@
-# django-chatty
-
 ![](django-chatty.png)
 
 This is a basic django chat app using *Django channels* from https://channels.readthedocs.io/en/latest/tutorial/part_4.html and inspired from [Justchat](https://github.com/justdjango/justchat).
@@ -48,15 +46,27 @@ docker run -p 6379:6379 -d redis:latest
 ```
 
 ```
-docker images
+docker ps -a
+docker rename  elated_newton redis_dj
+```
+
+Sometimes you need to clear all Redis cache for you Docker container for the problem caused by channels_redis maybe bugs.
+
+```
+for connection <WebRequest at 0x7f70180d1ef0 method=GET uri=/chat/static/style.css clientproto=HTTP/1.1> took too long to shut down and was killed.
 ```
 
 ```
-REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-redis               latest              f7302e4ab3a8        3 weeks ago         98.2MB
+docker exec -it redis_dj redis-cli FLUSHALL
 ```
 
-for windows user, plz install:
+OR more brutal
+
+```
+docker stop $(docker ps -a -q)
+```
+
+for windows user, if you want to use docker, plz install:
 https://github.com/docker/toolbox/releases
 
 

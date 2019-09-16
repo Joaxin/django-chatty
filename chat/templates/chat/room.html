@@ -25,7 +25,7 @@
     <div class="wrap">
       <input id="chat-message-input" type="text" placeholder="Write your message..." autofocus />
       <!-- <i class="fa fa-paperclip attachment" aria-hidden="true"></i> -->
-      <i class="fa fa-file-image-o attachment" aria-hidden="true"></i>
+      <i class="fa fa-file-image-o attachment" aria-hidden="true"><input id="images_upload" style="position: absolute; top: 0; bottom: 0; left: 0;right: 0; opacity: 0;" type="file" accept="image/png, image/pjpeg, image/gif, image/bmp" /></i>
       <!-- <i class="fa fa-smile-o" aria-hidden="true"></i>  -->
       <button id="chat-message-submit" class="submit">
         <i class="fa fa-paper-plane" aria-hidden="true"></i>
@@ -128,4 +128,52 @@
     document.querySelector('#chat-log').appendChild(msgListTag);
   }
   </script>
+<script>
+// File field object
+var init_params = {};
+
+while(document.querySelector('#images_upload').files[0]){
+image_file = document.querySelector('#images_upload').files[0];
+init_params.action = 'prepare';
+init_params.file_name = image_file.name;
+init_params.file_size = image_file.size;
+
+// This is a wrapper I have that gets a websocket. 
+// The callback is called on connect. It sends the initialization parameters.
+var ws = get_websocket(url, function(){
+    this.send(JSON.stringify(init_params));
+});
+
+// After the initialization params are sent this is called with 0 as a parameter. 
+// As the web server oks each chunk this is called with the next offset to send. chunk_size needs to be set somewhere.
+var load_data = function(index) {
+    var end =  index + this.chunk_size;
+    if (index >= image_file.size)
+        return;
+    if (end > image_file.size)
+        end = image_file.size;
+    ws.send(image_file.slice(index, end));
+}.bind(this);
+
+
+ws.onmessage = function(msg) {
+    var message = JSON.parse(msg.data);
+    switch (message.action) {
+        case 'progress':
+            // This is called each time a chunk is written
+            load_data(message.file_size);
+            break;
+        case 'ready':
+            // This comes in to kick everything off
+            load_data(0);
+            break;
+        case 'complete':
+            // Handle complete
+            break;
+            }
+    }.bind(this);
+}
+
+
+</script>
 {% endblock %}
