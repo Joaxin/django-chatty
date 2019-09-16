@@ -10,18 +10,12 @@ def index(request):
     return render(request, "chat/index.html")
 
 def login(request):
-    return render(request, "chat/login.html")
+    return render(request, "authentication/login.html")
 
 @login_required
 def room(request, room_name):
-    if request.user:
-        print(request.user.username)
-        return render(request, 'chat/room.html', {
-            'room_name_json': mark_safe(json.dumps(room_name)),
-            'username': serializers.serialize('json', [request.user,]),
-        })
-    else:
-        return render(request, 'chat/room.html', {
-            'room_name_json': mark_safe(json.dumps(room_name)),
-            'username': "visitor"
-        })
+    # print(request.user.username)
+    return render(request, 'chat/room.html', {
+        'room_name_json': mark_safe(json.dumps(room_name)),
+        'username': serializers.serialize('json', [request.user,]),
+    })

@@ -108,7 +108,7 @@
     var pTag = document.createElement('p');
     var tTag = document.createElement('time');
     tTag.className = "time";
-    tTag.textContent = data.timestamp.substring(10, 16);
+    tTag.textContent = data.timestamp.substring(10, 16) + author;
     pTag.textContent = data.content;
 
     imgTag.src = "{% static 'avatars/dontdothis.jpg' %}";
